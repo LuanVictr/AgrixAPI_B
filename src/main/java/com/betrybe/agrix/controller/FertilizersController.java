@@ -22,21 +22,34 @@ public class FertilizersController {
 
   private FertilizerService fertilizerService;
 
+  /**
+   * Construtor da camada de controle das rotas /fertilizers.
+   *
+   * @param fertilizerService recebe uma instancia da camada de
+   *                          servico por injecao de dependencia
+   */
   @Autowired
   public FertilizersController(FertilizerService fertilizerService) {
     this.fertilizerService = fertilizerService;
   }
 
+  /**
+   * Método que mapea a rota POST /fertilizers para a criacao de um novo
+   *     fertilizante.
+   *
+   * @param newFertilizerInfo informacoes do fertilizante a ser criado
+   * @return retorna o novo fertilizante criado
+   */
   @PostMapping
   public ResponseEntity<FertilizerResponseDto>
-  createFertilizer(@RequestBody FertilizerDto newFertilizerInfo) {
+      createFertilizer(@RequestBody FertilizerDto newFertilizerInfo) {
     Fertilizer newFertilizer = newFertilizerInfo.toFertilizer();
 
     Fertilizer createdFertilizer = this.fertilizerService.createFertilizer(newFertilizer);
     FertilizerResponseDto fertilizerResponse = new FertilizerResponseDto(
-        createdFertilizer.getId(), createdFertilizer.getName(), createdFertilizer.getBrand(),
-        createdFertilizer.getComposition()
-    );
+          createdFertilizer.getId(), createdFertilizer.getName(), createdFertilizer.getBrand(),
+          createdFertilizer.getComposition()
+      );
 
     return ResponseEntity.status(HttpStatus.CREATED).body(fertilizerResponse);
   }

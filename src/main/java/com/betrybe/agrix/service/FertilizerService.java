@@ -1,8 +1,10 @@
 package com.betrybe.agrix.service;
 
+import com.betrybe.agrix.exceptions.FertilizerNotFoundException;
 import com.betrybe.agrix.model.entities.Fertilizer;
 import com.betrybe.agrix.model.repositories.FertilizerRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,31 @@ public class FertilizerService {
     return createdFertilizer;
   }
 
+  /**
+   * Metodo que retorna todos os fertilizantes cadastrados.
+   *
+   * @return retorna uma lista com todos os fertilizantes.
+   */
+
   public List<Fertilizer> getAllFertilizers() {
     return this.fertilizerRepository.findAll();
+  }
+
+  /**
+   * Metodo que retorna o fertilizante baseado no id.
+   *
+   * @param id id do fertilizante buscado
+   * @return retorna o fertilizante buscado
+   * @throws FertilizerNotFoundException retorna um erro caso
+   *     o fertilizante nao seja encontrado
+   */
+  public Fertilizer getFertilizerById(Long id) throws FertilizerNotFoundException {
+    Optional<Fertilizer> optionalFertilizer = this.fertilizerRepository.findById(id);
+
+    if (optionalFertilizer.isEmpty()) {
+      throw new FertilizerNotFoundException();
+    }
+
+    return optionalFertilizer.get();
   }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,9 +56,25 @@ public class FertilizersController {
     return ResponseEntity.status(HttpStatus.CREATED).body(fertilizerResponse);
   }
 
+  /**
+   * Metodo que retorna todos os fertilizantes mapeado na rota
+   *     GET /fertilizers.
+   *
+   * @return retorna todos os fertilizantes
+   */
   @GetMapping
   public ResponseEntity<List<Fertilizer>> getAllFertilizers() {
     List<Fertilizer> allFertilizers = this.fertilizerService.getAllFertilizers();
     return ResponseEntity.status(HttpStatus.OK).body(allFertilizers);
   }
+
+  //  @GetMapping("/{fertilizerId}")
+  //  public ResponseEntity<Fertilizer> getFertilizerById(@PathVariable Long fertilizerId) {
+  //    try {
+  //      Fertilizer fertilizerFound = this.fertilizerService.getFertilizerById(fertilizerId);
+  //
+  //    } catch () {
+  //
+  //    }
+  //  }
 }

@@ -2,6 +2,7 @@ package com.betrybe.agrix.controller;
 
 import com.betrybe.agrix.controller.dto.FertilizerDto;
 import com.betrybe.agrix.controller.dto.FertilizerResponseDto;
+import com.betrybe.agrix.exceptions.FertilizerNotFoundException;
 import com.betrybe.agrix.model.entities.Fertilizer;
 import com.betrybe.agrix.service.FertilizerService;
 import java.util.List;
@@ -68,13 +69,25 @@ public class FertilizersController {
     return ResponseEntity.status(HttpStatus.OK).body(allFertilizers);
   }
 
-  //  @GetMapping("/{fertilizerId}")
-  //  public ResponseEntity<Fertilizer> getFertilizerById(@PathVariable Long fertilizerId) {
-  //    try {
-  //      Fertilizer fertilizerFound = this.fertilizerService.getFertilizerById(fertilizerId);
-  //
-  //    } catch () {
-  //
-  //    }
-  //  }
+  /**
+   * Metodo que retorna o fertilizante buscado pelo id, mapeado
+   *     na rota GET /fertilizers/id.
+   *
+   * @param fertilizerId id do fertilizante buscado
+   * @return retorna o fertilizante buscado
+   */
+  @GetMapping("/{fertilizerId}")
+  public ResponseEntity getFertilizerById(@PathVariable Long fertilizerId) {
+    try {
+
+      Fertilizer fertilizerFound = this.fertilizerService.getFertilizerById(fertilizerId);
+      return ResponseEntity.status(HttpStatus.OK).body(fertilizerFound);
+
+    } catch (FertilizerNotFoundException fertilizerNotFoundException) {
+
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
+          .body(fertilizerNotFoundException.getMessage());
+
+    }
+  }
 }

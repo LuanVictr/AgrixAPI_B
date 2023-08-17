@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 
 /**
  * Cria a entidade Crop.
@@ -28,6 +29,12 @@ public class Crop {
   @Column(name = "planted_Area")
   private Double plantedArea;
 
+  @Column(name = "planting_date")
+  private LocalDate plantedDate;
+
+  @Column(name = "harvest_date")
+  private LocalDate harverstDate;
+
   public Crop() {}
 
   /**
@@ -37,10 +44,13 @@ public class Crop {
    * @param plantedArea area plantada da crop criada
    * @param farm farm em que a crop sera relacionada
    */
-  public Crop(String name, Double plantedArea, Farm farm) {
+  public Crop(String name, Double plantedArea, Farm farm,
+      LocalDate plantedDate, LocalDate harverstDate) {
     this.name = name;
     this.plantedArea = plantedArea;
     this.farm = farm;
+    this.plantedDate = plantedDate;
+    this.harverstDate = harverstDate;
   }
 
   public Long getId() {
@@ -69,5 +79,21 @@ public class Crop {
 
   public void setFarm(Farm farm) {
     this.farm = farm;
+  }
+
+  public LocalDate getPlantedDate() {
+    return plantedDate;
+  }
+
+  public void setPlantedDate(LocalDate plantedDate) {
+    this.plantedDate = plantedDate;
+  }
+
+  public LocalDate getHarverstDate() {
+    return harverstDate;
+  }
+
+  public void setHarverstDate(LocalDate harverstDate) {
+    this.harverstDate = harverstDate;
   }
 }

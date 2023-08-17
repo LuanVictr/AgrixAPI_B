@@ -3,10 +3,10 @@ package com.betrybe.agrix.solution;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.betrybe.agrix.ebytr.staff.entity.Person;
 import com.betrybe.agrix.ebytr.staff.repository.PersonRepository;
 import com.betrybe.agrix.ebytr.staff.security.Role;
-import com.betrybe.agrix.model.entities.Person;
-import com.betrybe.agrix.service.PersonService;
+import com.betrybe.agrix.ebytr.staff.service.PersonService;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -91,6 +91,7 @@ public class PersonServiceTest {
     assertEquals(createdPerson.getUsername(), personToCreate.getUsername());
     assertEquals(createdPerson.getPassword(), personToCreate.getPassword());
     assertEquals(createdPerson.getRole(), personToCreate.getRole());
+
   }
 
 }

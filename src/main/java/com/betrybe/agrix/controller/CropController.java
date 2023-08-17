@@ -45,7 +45,8 @@ public class CropController {
 
     List<CropResponseDto> cropsResponse = allCrops.stream()
         .map(crop -> new CropResponseDto(crop.getId(), crop.getName(),
-        crop.getPlantedArea(), crop.getFarm().getId()))
+        crop.getPlantedArea(), crop.getFarm().getId(), crop.getPlantedDate(),
+            crop.getHarverstDate()))
         .toList();
 
     return ResponseEntity.status(HttpStatus.OK).body(cropsResponse);
@@ -66,7 +67,8 @@ public class CropController {
       Crop cropFound = this.cropService.getCropById(id);
 
       CropResponseDto cropResponse = new CropResponseDto(cropFound.getId(),
-          cropFound.getName(), cropFound.getPlantedArea(), cropFound.getFarm().getId());
+          cropFound.getName(), cropFound.getPlantedArea(), cropFound.getFarm().getId(),
+          cropFound.getPlantedDate(), cropFound.getHarverstDate());
 
       return ResponseEntity.status(HttpStatus.OK).body(cropResponse);
 

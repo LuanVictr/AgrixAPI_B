@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
  * Application main class.
  */
 @SpringBootApplication
-@EntityScan("com.betrybe.agrix.model.entities")
 @ComponentScan("com.betrybe.agrix")
 public class AgrixApplication {
 
@@ -18,5 +17,3 @@ public class AgrixApplication {
   }
 
 }
-
-// migrado

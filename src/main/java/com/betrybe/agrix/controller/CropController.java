@@ -81,8 +81,16 @@ public class CropController {
     }
   }
 
+  /**
+   * Rota que permite a busca de plantacoes baseadas na data de colheita.
+   *
+   * @param start data de inicio da busca
+   * @param end data de fim da busca
+   * @return retorna uma lista de plantacoes que atendem o requisito
+   */
   @GetMapping("/search")
-  public ResponseEntity<List<CropResponseDto>> searchCropByDate(@RequestParam LocalDate start,
+  public ResponseEntity<List<CropResponseDto>> searchCropByDate(
+      @RequestParam LocalDate start,
       @RequestParam LocalDate end) {
 
     List<Crop> allCrops = this.cropService.searchCropByDate(start, end);

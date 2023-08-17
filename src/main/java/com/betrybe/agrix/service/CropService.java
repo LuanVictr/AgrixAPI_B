@@ -86,7 +86,8 @@ public class CropService {
 
     List<Crop> allCrops = this.cropRepository.findAll();
     List<Crop> cropsReturned = allCrops.stream()
-        .filter(crop -> startingDate.isBefore(crop.getHarverstDate()) && endingDate.isAfter(crop.getHarverstDate()))
+        .filter(crop -> startingDate.isBefore(crop.getHarverstDate())
+            && endingDate.isAfter(crop.getHarverstDate()))
         .toList();
 
     return cropsReturned;

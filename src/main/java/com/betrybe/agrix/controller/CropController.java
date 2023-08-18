@@ -2,8 +2,11 @@ package com.betrybe.agrix.controller;
 
 import com.betrybe.agrix.controller.dto.CropResponseDto;
 import com.betrybe.agrix.exceptions.CropNotFoundException;
+import com.betrybe.agrix.exceptions.FertilizerNotFoundException;
 import com.betrybe.agrix.model.entities.Crop;
+import com.betrybe.agrix.model.entities.Fertilizer;
 import com.betrybe.agrix.service.CropService;
+import com.betrybe.agrix.service.FertilizerService;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/crops")
 public class CropController {
   private CropService cropService;
+  private FertilizerService fertilizerService;
 
   /**
    * Construtor do controller CropController.
@@ -30,8 +35,9 @@ public class CropController {
    *                    injecao de dependencia.
    */
   @Autowired
-  public CropController(CropService cropService) {
+  public CropController(CropService cropService, FertilizerService fertilizerService) {
     this.cropService = cropService;
+    this.fertilizerService = fertilizerService;
   }
 
   /**
@@ -102,6 +108,41 @@ public class CropController {
         .toList();
 
     return ResponseEntity.status(HttpStatus.OK).body(allCropsConverted);
+
+  }
+
+  /**
+   * Método que associa plantacao a um fertilizante.
+   *
+   * @param cropId Id da plantacao a ser associada
+   * @param fertilizerId id do fertilizante a ser associado
+   * @return retorna se a operacao foi bem sucedida
+   */
+  @PostMapping("/{cropId}/fertilizers/{fertilizerId}")
+  public ResponseEntity createFertilizerByCropId(@PathVariable Long cropId,
+      @PathVariable Long fertilizerId) {
+    try {
+      Crop cropFound = this.cropService.getCropById(cropId);
+      Fertilizer fertilizerFound = this.fertilizerService.getFertilizerById(
+          fertilizerId
+      );
+      cropFound.setFertilizers(fertilizerFound);
+      return ResponseEntity.status(HttpStatus.CREATED).body(
+          "Fertilizante e plantação associados com sucesso!"
+      );
+    } catch (FertilizerNotFoundException fertilizerNotFoundException) {
+
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+          fertilizerNotFoundException.getMessage()
+      );
+
+    } catch (CropNotFoundException cropNotFoundException) {
+
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+          cropNotFoundException.getMessage()
+      );
+
+    }
 
   }
 }

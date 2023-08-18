@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan("com.betrybe.agrix")
 public class AgrixApplication {
-
   public static void main(String[] args) {
     SpringApplication.run(AgrixApplication.class, args);
   }
